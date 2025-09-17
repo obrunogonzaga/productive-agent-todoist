@@ -31,8 +31,7 @@ COPY *.py ./
 COPY entrypoint.sh ./
 RUN chmod +x entrypoint.sh
 
-# Copy .env.example as fallback (but don't require .env)
-COPY .env.example ./.env.example
+# No .env files needed - using environment variables directly
 
 # Expose port
 EXPOSE 7777

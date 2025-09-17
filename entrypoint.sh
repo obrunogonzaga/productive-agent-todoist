@@ -1,29 +1,10 @@
 #!/bin/bash
 set -e
 
-# If .env exists as a directory (Coolify bug), remove it
-if [ -d /app/.env ]; then
-    echo "Found .env as directory, removing it..."
-    rm -rf /app/.env
-fi
+echo "🚀 Starting Todoist AgentOS..."
+echo "Environment variables are set by Coolify"
 
-# Create .env file from environment variables if it doesn't exist
-if [ ! -f /app/.env ]; then
-    echo "Creating .env file from environment variables..."
-    
-    # Write environment variables to .env file
-    cat > /app/.env << EOF
-TODOIST_API_KEY=${TODOIST_API_KEY}
-OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-OS_SECURITY_KEY=${OS_SECURITY_KEY:-}
-AGNO_API_KEY=${AGNO_API_KEY:-}
-AGNO_MONITOR=${AGNO_MONITOR:-false}
-EOF
-    
-    echo ".env file created successfully"
-else
-    echo "Using existing .env file"
-fi
-
-# Execute the main application
+# Simply execute the Python application
+# The Python code already uses os.getenv() which reads from environment
+# No need to create .env file - it will work with environment variables directly
 exec python 5-assistente-agentOS.py
