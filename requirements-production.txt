@@ -1,0 +1,10 @@
+# Production dependencies - without python-dotenv
+agno>=2.0.3
+openai>=1.107.1
+tavily-python>=0.7.12
+yfinance>=0.2.65
+requests>=2.31.0
+fastapi
+uvicorn
+ag-ui-protocol
+fastmcp

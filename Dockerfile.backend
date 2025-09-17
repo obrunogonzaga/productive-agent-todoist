@@ -18,13 +18,10 @@ RUN apt-get update && apt-get install -y \
     && curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Copy dependency files
-COPY pyproject.toml uv.lock* ./
+COPY requirements-production.txt ./
 
 # Install Python dependencies using uv
-RUN uv pip install --system -r pyproject.toml
-
-# Install additional required packages
-RUN uv pip install --system fastapi uvicorn ag-ui-protocol fastmcp
+RUN uv pip install --system -r requirements-production.txt
 
 # Copy application code
 COPY *.py ./
