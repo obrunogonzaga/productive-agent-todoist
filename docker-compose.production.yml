@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # Backend - AgentOS with Todoist Assistant
+  todoist-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: todoist-agent
+    ports:
+      - "${PORT:-7777}:7777"
+    environment:
+      # Todoist API
+      - TODOIST_API_KEY=${TODOIST_API_KEY}
+      
+      # OpenRouter API for LLM
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      
+      # AgentOS Configuration
+      - OS_SECURITY_KEY=${OS_SECURITY_KEY:-}
+      - AGNO_API_KEY=${AGNO_API_KEY:-}
+      - AGNO_MONITOR=${AGNO_MONITOR:-false}
+      
+      # Server Configuration
+      - HOST=0.0.0.0
+      - PORT=7777
+    volumes:
+      - ./logs:/app/logs
+      - ./.env:/app/.env:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7777/config"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      # Coolify labels for automatic detection
+      - "coolify.managed=true"
+      - "coolify.type=application"
+      - "coolify.name=todoist-agent"
+      - "coolify.domain=${DOMAIN:-todoist-agent.yourdomain.com}"
+      - "coolify.port=7777"
+
+  # Optional: PostgreSQL for persistent storage (sessions, memories)
+  # Uncomment if you want to use database features
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: todoist-db
+  #   environment:
+  #     - POSTGRES_USER=${DB_USER:-agentuser}
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD}
+  #     - POSTGRES_DB=${DB_NAME:-agentdb}
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-agentuser}"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+# Uncomment if using PostgreSQL
+# volumes:
+#   postgres_data:
