@@ -28,8 +28,6 @@ RUN uv pip install --system fastapi uvicorn ag-ui-protocol fastmcp
 
 # Copy application code
 COPY *.py ./
-COPY entrypoint.sh ./
-RUN chmod +x entrypoint.sh
 
 # No .env files needed - using environment variables directly
 
@@ -40,5 +38,5 @@ EXPOSE 7777
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:7777/config || exit 1
 
-# Use entrypoint script to handle environment setup
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Run the Python application directly
+CMD ["python", "5-assistente-agentOS.py"]
