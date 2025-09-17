@@ -26,7 +26,6 @@ services:
       - PORT=7777
     volumes:
       - ./logs:/app/logs
-      - ./.env:/app/.env:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:7777/config"]

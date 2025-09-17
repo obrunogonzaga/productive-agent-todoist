@@ -28,7 +28,11 @@ RUN uv pip install --system fastapi uvicorn ag-ui-protocol fastmcp
 
 # Copy application code
 COPY *.py ./
-COPY .env* ./
+COPY entrypoint.sh ./
+RUN chmod +x entrypoint.sh
+
+# Copy .env.example as fallback (but don't require .env)
+COPY .env.example ./.env.example
 
 # Expose port
 EXPOSE 7777
@@ -37,5 +41,5 @@ EXPOSE 7777
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:7777/config || exit 1
 
-# Run the AgentOS application
-CMD ["python", "5-assistente-agentOS.py"]
+# Use entrypoint script to handle environment setup
+ENTRYPOINT ["/app/entrypoint.sh"]
