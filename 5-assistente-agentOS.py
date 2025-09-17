@@ -5,11 +5,8 @@ from agno.os import AgentOS
 from agno.os.interfaces.agui import AGUI
 import os
 import requests
-from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from typing import Optional
-
-load_dotenv()
 
 # Configuração da API do Todoist
 TODOIST_API_KEY = os.getenv("TODOIST_API_KEY")
