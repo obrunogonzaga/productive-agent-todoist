@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# If .env exists as a directory (Coolify bug), remove it
+if [ -d /app/.env ]; then
+    echo "Found .env as directory, removing it..."
+    rm -rf /app/.env
+fi
+
 # Create .env file from environment variables if it doesn't exist
 if [ ! -f /app/.env ]; then
     echo "Creating .env file from environment variables..."
