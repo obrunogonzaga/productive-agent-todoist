@@ -11,4 +11,5 @@ dependencies = [
     "tavily-python>=0.7.12",
     "yfinance>=0.2.65",
     "requests>=2.31.0",
+    "sqlalchemy>=2.0.43",
 ]
