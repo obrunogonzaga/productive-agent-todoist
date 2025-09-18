@@ -9,7 +9,7 @@ load_dotenv()
 
 agent = Agent(
     tools=[TavilyTools()],
-    debug_mode=True,  # Mencionar após na apresentação
+    debug_mode=True,
     model=OpenRouter(
         id="openai/gpt-4o-mini",
         api_key=os.getenv("OPENROUTER_API_KEY")

@@ -10,7 +10,7 @@ load_dotenv()
 
 agent = Agent(
     tools=[TavilyTools(), YFinanceTools()],
-    debug_mode=True,  # Mencionar após na apresentação
+    debug_mode=True,
     instructions="Use tabelas para mostrar a informação final. Não inclua nenhum outro texto",
     model=OpenRouter(
         id="openai/gpt-4o-mini",
